@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block extra_head %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/movie_details.css' %}">
+{% endblock %}
+{% block title %}
+    Watch {{ movie_details.title }} ({{ movie_details.get_release_year }})
+{% endblock %}
+
+{% block content %}
+    <div id="movie-details" class="container h-100 mt-5">
+        <!-- Youtube Modal -->
+        <div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ movie_details.title }}- Trailer</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                  <div class="embed-responsive embed-responsive-16by9">
+                    <iframe id="trailer" src="{{ movie_details.generate_embed_url }}" width="560" height="315" allowfullscreen="true" frameborder="0"></iframe>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        <div class="poster rounded mb-2" style="--data-image: url('{{ poster_base_url | add:movie_details.poster | add:'?tr=w-240,h-360' }}');">
+            <span class="badge badge-pill badge-success quality">{{ movie_details.quality }}</span>
+        </div>
+        <div class="movie-title mb-5 text-truncate">
+            <h1>{{ movie_details.title }}</h1>
+        </div>
+        <div class="controls d-flex justify-content-center">
+            {% load app_filters %}
+            <a  href="{% url 'movie-stream' title=movie_details.generate_slug pk=movie_details.id genre_id=movie_details.genre.all|get_random_genre %}" class="play-movie btn btn-primary p-2 mr-3 text-white">PLAY MOVIE</a>
+
+            <a href="#myModal" data-toggle="modal" class="play-trailer btn btn-dark p-2 text-white">PLAY TRAILER</a>
+        </div>
+
+        <div class="details mt-5">
+            <h1 class="mb-3">Synopsis</h1>
+            <p style="text-align: justify;" class="mb-5">{{ movie_details.plot }}</p>
+
+            <h1 class="mb-3">Duration</h1>
+            <p class="mb-5">{{ movie_details.duration }} minutes</p>
+
+            <h1 class="mb-3">Genre</h1>
+
+            <p class="mb-5">
+                {% load app_filters %}
+                {{ movie_details.genre.all | join:', ' }}
+            </p>
+
+            {% if movie_details.directors %}
+                <h1 class="mb-3">Directors</h1>
+                <p class="mb-5">{{ movie_details.directors }}</p>
+            {% endif %}
+
+            <p style="font-size: 16px;" class="mt-5"> <span class="far fa-hand-point-right mr-2 text-danger"></span>Use this <a href="{{ movie_details.generate_watch_url }}" target="trailer">link</a>, if trailer fails to play.</p>
+        </div>
+    </div>
+{% endblock %}

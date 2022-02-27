@@ -1,0 +1,373 @@
+.hidden {
+    display: none !important;
+}
+
+/* Toggle switch css */
+.toggle {
+    --width: 40px;
+    --height: calc(var(--width) / 2);
+    --border-radius: calc(var(--height) / 2);
+    display: inline-block;
+    cursor: pointer;
+    margin-top: 5%;
+    margin-left: 1%;
+}
+.toggle__input {
+    display: none;
+}
+.toggle__fill {
+    position: relative;
+    width: var(--width);
+    height: var(--height);
+    border-radius: var(--border-radius);
+    background: #2c2c2c;
+    transition: background 0.2s;
+}
+.toggle__fill::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: var(--height);
+    width: var(--height);
+    background: #454545;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    border-radius: var(--border-radius);
+    transition: transform 0.2s;
+}
+.toggle__input:checked ~ .toggle__fill {
+    background: #009578;
+}
+
+.toggle__input:checked ~ .toggle__fill::after {
+    transform: translateX(var(--height));
+}
+/* End */
+body.dark-theme {
+    --border-color: #2c2c2c;
+    --btn-hover-bg-color: #454545;
+    --bkg-color: #121212;
+    --icon-color: #454545;
+}
+
+body .icon {
+    color: #858585 !important;
+}
+
+header.top-bar {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #eceec;
+    box-shadow: 0px 2px 4px #ececec;
+}
+.open-nav {
+    flex: 0 0 5vw;
+    font-size: 150%;
+    vertical-align: center;
+    margin-right: 4%;
+    margin-left: 1%;
+    padding-top: .9%;
+}
+.open-nav:hover {
+    cursor: pointer;
+ }
+.logo {
+    flex: 1 0 auto;
+}
+.logo span {
+    font-size: 150%;
+    color: rgba(233, 69, 96);
+    font-family: 'Titillium Web', sans-serif ;
+}
+
+.search {
+    flex: 0 0 auto;
+    text-align: right;
+    text-align: right;
+}
+.search img {
+    width: 40px;
+    height: 30px;
+    object-fit: contain;
+    cursor: pointer;
+}
+
+div.overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .8);
+    z-index: 6;
+    display: none;
+}
+
+div.search-modal {
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100vw;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 65px auto 5vh 10vh;
+    grid-row-gap: 5px;
+    background-color: #fff;
+    margin-right: -110%;
+    transition: margin-right .5s ease-out;
+    z-index: 10;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+div.search-top-bar {
+    border-bottom: 1px solid #ececec;
+    display: flex;
+    align-items: stretch;
+
+}
+
+div.close-search {
+    flex: 0 0 20%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+div.close-search span {
+    font-size: 20px;
+}
+
+div.search-top-bar form {
+    flex: 1 1 auto;
+    margin-left: 2%;
+    display:  flex;
+    align-items: center;
+}
+div.search-input-container {
+    flex: 1 1 auto;
+    padding-right: 1%;
+}
+
+input.search-input {
+    width: 100%;
+    border: 1px solid #ececec;
+    background: #ececec;
+    border-radius: 30px;
+
+}
+input.search-input:focus {
+    outline: none;
+}
+
+section.navigation-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 300px;
+    z-index: 8; /* Bring it to the front of the content */
+    overflow: hidden;
+    margin-left: -300px;
+    transition: margin-left 0.5s ease-out;
+}
+
+body section.navigation-container > nav {
+    /* Position the closing nav button relative to its navigation */
+    position: relative;
+    padding: 0;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    flex-direction: column;
+    background-color: rgb(238, 238, 238);
+    box-shadow: rgb(0, 0, 0) 0px 0px 5px;
+}
+
+.close-nav {
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: black;
+    font-size: 250%;
+    padding-right: 5%;
+}
+.close-nav:hover {
+    color: rgb(2, 158, 236);
+    text-decoration: none;
+}
+div.nav-header {
+    padding-top: 10%;
+    padding-bottom: 15%;
+    width: 100%; /* 100% of the navigation container width */
+    flex: 0 0 10vh;
+    border-bottom: 1px solid lightgray;
+}
+div.login-avatar, div.username-login {
+    width: 100%; /* 100% of the nav-header width */
+    text-align: center;
+}
+div.login-avatar {
+    margin-bottom: 5%;
+}
+
+div.login-avatar > span:before {
+    font-size: 50px;
+    color: gray;
+    font-family: Heydings;
+    content: attr(data-icon);
+}
+
+ul.nav-menu {
+    flex: 1 1 auto;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid lightgray;
+}
+
+ul.nav-menu li.nav-option {
+    padding-top: 5%;
+    padding-bottom: 5%;
+    padding-left: 3%;
+    /*border-bottom: 1px solid lightgray*/;
+    font-size: 110%;
+    color: rgba(0, 0, 0, 0.87);
+    position: relative;
+    white-space: nowrap;
+}
+ul.nav-menu li.nav-option.active {
+    background-color: rgb(2, 158, 236);
+    color: #fff;
+}
+
+ul.nav-menu li.nav-option:not(.active):hover {
+    background-color: #fff;
+    cursor: pointer;
+}
+ul.nav-menu li.nav-option a {
+    color: inherit;
+}
+ul.nav-menu li.nav-option a:hover {
+    text-decoration: none;
+}
+div.settings {
+    flex: 1 1 auto;
+    padding-left: 3%;
+    font-size: 110%;
+}
+
+div.dark-theme-setting {
+    display: flex;
+    align-items: center;
+}
+
+div.settings .icon {
+     margin-right: 25px;
+}
+div.settings label {
+    flex: 0 0  auto;
+    padding-right: 1%;
+}
+div.setting-text {
+    flex: 1 1 auto;
+}
+span.nav-icon:before {
+    margin-right: 25px;
+    content: attr(data-icon);
+    font-family: Heydings;
+    font-size: 20px;
+    -webkit-font-smoothing: antialiased;
+}
+
+.nav-footer {
+    flex: 0 0 auto; /* Always stay at the bottom */
+    text-align: center;
+    font-size: 12px;
+}
+
+/* Customize the look of the search modal when overflow occurs  to differentiate it from the window scroll bar
+#search-modal::-webkit-scrollbar {
+    width: 15px;
+}
+#search-modal::-webkit-scrollbar-track {
+    background: #bd9814;
+}
+#search-modal::-webkit-scrollbar-thumb {
+    background: #3c3c3c;
+    border-radius: 20px;
+ } */
+/* Desktop Styles */
+@media screen and (min-width: 769px) {
+    div.nav-header {
+        padding-top: 25px;
+        padding-bottom: 35px;
+        width: 100%; /* 100% of the navigation container width */
+        flex: 0 0 10vh;
+    }
+
+    section.navigation-container {
+        width: 400px;
+        margin-left: -400px;
+    }
+    .search {
+        margin-right: 10px;
+    }
+}
+/* Dark theme styles */
+
+body.dark-theme section.navigation-container > nav {
+    background-color: var(--bkg-color);
+    color: #eee;
+}
+
+body.dark-theme div.nav-header {
+    border-bottom-color: var(--border-color);
+    background-color: var(--bkg-color);
+}
+
+body.dark-theme ul.nav-menu li.nav-option {
+    color: #eee;
+    font-size: 21px;
+}
+body.dark-theme .icon {
+    color: var(--icon-color);
+}
+body.dark-theme div.username-login .btn {
+    opacity: .8;
+    font-weight: 550;
+    font-size: 120%;
+}
+body.dark-theme ul.nav-menu {
+    border-bottom: 1px solid var(--border-color);
+}
+
+body.dark-theme ul.nav-menu li.nav-option.active {
+    background-color: var(--btn-hover-bg-color);
+}
+
+body.dark-theme ul.nav-menu li.nav-option:not(.active):hover {
+    background-color: #2c2c2c;
+}
+
+body.dark-theme header.top-bar {
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: none;
+}
+
+body.dark-theme div.search-modal {
+    background-color: var(--bkg-color);
+}
+body.dark-theme div.search-top-bar {
+    border-bottom: 1px solid var(--border-color);
+}
+
+body.dark-theme input.search-input {
+    background: #2c2c2c;
+    border: 1px solid #2c2c2c;
+    color: #858585;
+}
+
+body.dark-theme .logo span {
+    color: rgba(233, 69, 96, .7);
+}
+

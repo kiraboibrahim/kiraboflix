@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block title %}
+    Watch | Download {{ movie_details.title }} ({{ movie_details.get_release_year }}) for free
+{% endblock %}
+{% block extra_head %}
+
+    {% load static %}
+    <script src="{% static 'js/lazyloading.js' %}"></script>
+    <script src="{% static 'js/scroll.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/watch_movie.css' %}">
+{% endblock %}
+{% block content %}
+
+    <div class="container mt-5">
+        <div class="title-select-wrapper mb-3">
+          <h1 class="mb-2 d-inline-block" style="font-size: 16px;"> {{ movie_details.title }} ({{ movie_details.get_release_year }})</h1>
+        </div>
+        <!-- At most, they can be four -->
+        <div id="player"></div>
+        <script>
+            $(document).ready(function() {
+
+                window.webtor = window.webtor || [];
+
+                let mobile_not_supported_msg = "This is a non mp4 (mkv or avi) file which may fail to play on a mobile phone, we suggest you either use a computer to watch the movie or <b>refresh the page and download it</p>";
+                let alert_info = function (title, msg) {
+                    bootbox.alert({
+                        title: title,
+                        msg: msg,
+                    });
+                } // end alert_info
+
+                let config = {
+                    id: 'player',
+                    baseUrl: 'https://webtor.io',
+                    magnet:  {% if movie_details.web_rip_720p_url %}
+                                '{{ movie_details.web_rip_720p_url }}'
+                             {% elif movie_details.web_rip_1080p_url %}
+                                '{{ movie_details.web_rip_1080p_url }}'
+                             {% elif movie_details.blu_ray_720p_url %}
+                                '{{ movie_details.blu_ray_720p_url }}'
+                             {% elif movie_details.blu_ray_1080p_url %}
+                                '{{ movie_details.blu_ray_1080p_url }}'
+                             {% endif %},
+                    title:  '{{ movie_details.title }} ({{ movie_details.get_release_year }})',
+                    imdbId: '{{ movie_details.imdb_id }}',
+                    width: '100%',
+                    features: {
+                        continue:    true,
+                        p2pProgress: false,
+                        subtitles:   true,
+                        settings:    false,
+                        chromecast:  true,
+                        embed: false,
+
+                    },
+                    i18n: {
+                        en: {
+                            common: {
+                                "prepare to play": "Preparing your movie... Please Wait...",
+                            },
+
+                        },
+                    },
+                    on: function(e) {
+                        if (e.name == window.webtor.TORRENT_FETCHED) {
+                            files = e.data.files;
+                            for (const f of e.data.files) {
+                                if (f.name.endsWith(".mkv") || f.name.endsWith(".avi")) {
+                                    alert_info("Player", mobile_not_supported_msg);
+                                }
+                            }
+                        }
+                        if (e.name == window.webtor.TORRENT_ERROR) {
+                            let title="Playing Error";
+                            let msg="An error has occurred has playing your movie";
+                            alert_info(title, msg);
+                        }
+
+                    },
+                } // end config
+
+                window.webtor.push(config);
+            }); //end ready
+
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/@webtor/player-sdk-js/dist/index.min.js" charset="utf-8" async></script>
+        <div class="similar-movies mt-5">
+            <h1>Similar Movies</h1>
+            <div class="similar-movies-container">
+                <div class="genre-wrapper position-relative">
+                    <!-- For scrolling on desktops -->
+                    <div class="left-paddle paddle hidden">
+                        <span class="arrow fas fa-chevron-left"></span>
+                    </div>
+                    <div class="right-paddle paddle hidden">
+                        <span class="arrow fas fa-chevron-right"></span>
+                    </div>
+
+                    <div class="genre-movies mb-1">
+                            {% for movie in similar_movies %}
+                                <div class="movie" style="--data-LQIP: url('{{ poster_base_url | add:movie.poster | add:'?tr=w-1,h-1:w-240,h-360' }}');">
+
+                                    <div id="poster" class="lazy">
+                                            <img class="lazy" data-src="{{ poster_base_url | add:movie.poster | add:'?tr=w-240,h-360' }}">
+                                            <div class="poster-overlay d-flex justify-content-center align-items-center">
+                                                 <div class="play bg bg-danger p-3 px-4">
+                                                     <a class="stretched-link" href="{% url 'movie-detail' title=movie.generate_slug pk=movie.id %}"><span class="fas fa-play text-white "></span></a>
+                                                 </div>
+                                            </div>
+                                    </div>
+                                    <div class="movie-title text-truncate">
+                                        {{ movie.title }}
+                                    </div>
+
+                                </div>
+                            {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

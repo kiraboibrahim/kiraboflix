@@ -1,0 +1,28 @@
+body.dark-theme {
+    --border-color: #2c2c2c;
+    --color: #858585;
+    --bkg-color: #121212;
+}
+body.dark-theme  {
+    color: var(--color);
+    background-color: var(--bkg-color);
+}
+
+body.dark-theme input, body.dark-theme textarea, body.dark-theme input:focus, body.dark-theme textarea:focus {
+    background: var(--bkg-color);
+    border: 1px solid var(--border-color);
+    color: var(--color);
+    box-shadow: none;
+    outline: none !important;
+}
+
+body.dark-theme img {
+    -webkit-filter: brightness(.8) contrast(1.2);
+    -moz-filter: brightness(.8) contrast(1.2);
+    -ms-filter: brightness(.8) contrast(1.2);
+    -o-filter: brightness(.8) contrast(1.2);
+    filter: brightness(.8) contrast(1.2);
+}
+body.dark-theme .btn {
+    opacity: .7;
+}

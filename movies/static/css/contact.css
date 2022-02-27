@@ -1,0 +1,11 @@
+.errorlist {
+    list-style: none;
+    padding: 0;
+}
+.errorlist li {
+    list-style: none;
+    padding: none;
+    color: rgb(233, 69, 96);
+    font-size: 14px;
+}
+

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}
+    CONTACT KIRABOFLIX
+{% endblock %}
+{% block active_contact %}
+    active
+{% endblock %}
+{% block extra_head %}
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock %}
+{% block content %}
+    <div class="container mt-5 p-3">
+        <h1 style="font-size: 19px; font-weight: bold;"> CONTACT US</h1>
+        <!--div class="help my-3">
+            <small class="text-muted"><b>*  Required fields</b></small>
+        </div-->
+        <form method="post" action="{% url 'contact' %}" class="mt-3">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="{{ form.first_name.id_for_label }}">First Name *</label>
+                <p class="error">{{ form.first_name.errors }} </p>
+                <input class="form-control" {% if form.first_name.value != None %} value="{{ form.first_name.value | stringformat:'s' }}" {% endif %} type="text" name="{{ form.first_name.name }}" id="{{ form.first_name.id_for_label }}"  maxlength="{{ form.first_name.field.max_length }}" {% if form.first_name.fields.required %} required {% endif %}>
+                <div class="help-text">
+                    <small class="form-text text-muted">{{ form.first_name.help_text }}</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="{{ form.last_name.id_for_label }}">Last Name *</label>
+                <p class="error">{{ form.last_name.errors }} </p>
+                <input class="form-control" {% if form.last_name.value != None %} value="{{ form.last_name.value | stringformat:'s' }}" {% endif %} type="text" name="{{ form.last_name.name }}" id="{{ form.last_name.id_for_label }}" maxlength="{{ form.last_name.field.max_length }}" {% if form.last_name.fields.required %} required {% endif %}>
+                <div class="help-text">
+                    <small class="form-text text-muted">{{ form.last_name.help_text }}</small>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="{{ form.email.id_for_label }}"> Email *</label>
+                <p class="error">{{ form.email.errors }} </p>
+                <input class="form-control" {% if form.email.value != None %} value="{{ form.email.value | stringformat:'s' }}" {% endif %} type="email" name="{{ form.email.name }}" id="{{ form.email.id_for_label }}" maxlength="{{ form.email.field.max_length }}" {% if form.email.fields.required %} required {% endif %}>
+                <div class="help-text">
+                    <small class="form-text tex-muted">{{ form.email.help_text }}</small>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.message.id_for_label }}">Message *</label>
+                <p class="error">{{ form.message.errors }} </p>
+                <textarea rows="7" class="form-control" {% if form.message.value != None %} value="{{ form.message.value | stringformat:'s' }}" {% endif %} type="text" name="{{ form.message.name }}" id="{{ form.message.id_for_label }}" maxlength="{{ form.message.field.max_length }}" {% if form.message.fields.required %} required {% endif %}></textarea>
+                <div class="help-text">
+                    <small class="form-text text-muted">{{ form.message.help_text }}</small>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mb-3" style="float: right;">SUBMIT</button>
+        </form>
+    </div>
+
+{% endblock %}

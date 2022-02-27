@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ genre }} Movies - KIRABOFLIX
+{% endblock %}
+{% block extra_head %}
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/genre_movies_list.css' %}">
+    <script>
+        $(document).ready(function () {
+            document.page = 1;
+            let no_more_movies = false; // Flag to indicate that no more pages are remaining
+            // Ensure that no other fetch request is made when there is one in progress
+            let fetch_request_completed = true; // Ensure that no other fetch request is made when there is one in progress
+            let url = `${base_url}/movies/discover/{{genre}}/{{pk}}/page/${document.page}`;
+            let poster_base_url = "https://ik.imagekit.io/8mch78q847k";
+            let movies_container = $("#movie-results");
+
+            function load_more_movies_pages() {
+                if (!no_more_movies) {
+                    // Only go to next page if there are more movies to display
+                    document.page++;
+                }
+                let next_page = document.page;
+                let more_movies_url = `${base_url}/movies/discover/{{genre}}/{{pk}}/page/${next_page}`;
+                fetch_movies_results(more_movies_url, render_movies_results);
+            }
+            let change_loading_status = function (searching) {
+                if(searching) {
+                    fetch_requested_completed = false;
+                    $("#genre-movies-container").attr("data-status", "searching");
+                }
+                else {
+                    fetch_request_completed = true;
+                    $("#genre-movies-container").attr("data-status", "done");
+                }
+
+            }
+
+            async function render_movies_results(json_data) {
+                /*
+                    // Example of a search result Element
+                    <div>
+                        <div class="poster">
+                        </div>
+                        <div class="title">
+                            Rings
+                         </div>
+                    </div>
+
+                */
+                if (Object.keys(json_data).length != 0) {
+                    Object.keys(json_data).forEach(function (key) {
+                        let pk = json_data[key].pk;
+                        let poster_field = json_data[key].fields.poster;
+                        let title_field = json_data[key].fields.title;
+                        let wrapper = $("<div></div>");
+                        let poster = $("<div></div>").addClass("poster");
+                        let title = $("<div></div>").addClass("title");
+                        let img = $("<img/>");
+                        let mangled_title = title_field.replace(/\s/g, "-");
+                        // link to the movie play page
+                        let href = `${base_url}/movies/play/${mangled_title}/${pk}`;
+                        let a = $("<a></a>").attr("href", href).addClass("stretched-link title-link").text(title_field);
+                        // Remove background once the image is fully downloaded
+                        img.on("load", function () {
+                           poster.css("background-image", "none");
+                        });
+                        poster.css("background-image", `url(${poster_base_url}${poster_field}?tr=w-1,h-1:w-240,h-360)`);
+                        img.attr("src", `${poster_base_url}${poster_field}?tr=w-240,h-360`);
+                        poster.append(img);
+                        title.addClass("text-truncate").append(a);
+                        // Removed
+                        // poster.append(overlay);
+                        wrapper.append(poster).append(title);
+                        movies_container.append(wrapper);
+
+                    }); //end forEach
+                }
+                else {
+                    no_more_movies = true // Empty json data implies no movies remaining
+                    if(window.page == 2) {
+                        alert_info("Search", "No results found.");
+                    }
+                }
+            }
+            async function fetch_movies_results(url, callback) {
+                if (fetch_request_completed && !no_more_movies) {
+                    change_loading_status(true);
+                    fetch(url).then(function(response) {
+                        change_loading_status(false);
+                        if (response.status == 200) {
+                            response.json()
+                            .then(function (json_data) {
+                                callback(json_data);
+                            })
+                            .catch(function (error) {
+                                change_loading_status(false);
+                                alert_error();
+                            }); //end json catch block
+                        }
+                        else {
+                            alert_error(err);
+                        }
+
+                    })
+                    .catch(function (error) {
+                        change_loading_status(false);
+                        alert_error();
+                    }); //end fetch catch block
+                }
+            }
+
+            fetch_movies_results(url, render_movies_results);
+
+            let document_margin = 100;
+            $(window).on('scroll', function (e) {
+                // If user is at the bottom of the page, then load more movies
+                let document_height = $(".top-bar").height() + $(".main-content").height();
+                if(($(window).scrollTop() + $(window).height()) >= document_height) {
+                    load_more_movies_pages();
+                }
+            }); // end scroll
+        }); // end ready
+    </script>
+
+{% endblock %}
+
+{% block content %}
+    <div id="genre-movies-container" class="container" data-status="done">
+        <h1 class="mt-5 mb-3">
+            {{ genre }} Movies
+        </h1>
+        <div class="search-results container w-100 p-0" id="movie-results"></div>
+        <div class="padding p-3" width="100%" height="40px"></div>
+        <div class="search-status"></div>
+        <!--div class="padding p-3" width="100%" height="40px"></div-->
+    </div>
+
+{% endblock %}

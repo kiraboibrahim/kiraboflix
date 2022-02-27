@@ -1,0 +1,57 @@
+#movie-details.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+div.footer {
+    display: none !important;
+}
+.poster {
+    width: 240px;
+    position: relative;
+    height: 360px;
+    background-image: var(--data-image);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+a.play-movie, a.play-trailer {
+    font-size: 15px;
+}
+span.quality {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+}
+
+.movie-title h1 {
+    font-size: 24px;
+}
+.details {
+    position: relative;
+
+    align-self: flex-start;
+}
+.details h1 {
+     font-size: 22px;
+     font-weight: bold;
+}
+
+/* For Medium screens and below  */
+@media screen  and  (max-width: 768px) {
+        .poster {
+            height: 232px;
+            width: 153px;
+        }
+}
+
+/* Dark theme styles */
+
+body.dark-theme .poster {
+    -webkit-filter: brightness(.8) contrast(1.2);
+    -moz-filter: brightness(.8) contrast(1.2);
+    -ms-filter: brightness(.8) contrast(1.2);
+    -o-filter: brightness(.8) contrast(1.2);
+    filter: brightness(.8) contrast(1.2);
+}

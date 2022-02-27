@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block extra_head %}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader&display=swap" rel="stylesheet">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+{% endblock %}
+{% block active_home %}
+    active
+{% endblock %}
+{% block content %}
+        <div class="content-overlay p-3">
+            <div class="cta">
+                <p class="mb-3">
+                    WATCH, DOWNLOAD MOVIES, TV SERIES FOR FREE,
+
+                </p>
+                <p>
+                    NO SUBSCRIPTION, FEW ADS.
+                </p>
+                <a href="{% url 'movie-listing' %}" class="btn btn-danger p-2 px-5 position-relative">
+                    WATCH NOW
+                </a>
+            </div>
+        </div>
+
+{% endblock %}
+{% block extra_content %}
+        <div class="site-qualities">
+            <div class="container w-100 h-100 pt-5">
+                <div id="a">
+                    <div class="image"></div>
+                    <h1>Weekly Uploads</h1>
+                </div>
+                <div id="b">
+                    <div class="image"></div>
+                    <h1>Free</h1>
+                </div>
+                <div id="c">
+                    <div class="image"></div>
+                    <h1>HD Content</h1>
+                </div>
+                <div id="d">
+                    <div class="image"></div>
+                    <h1>Excellent Customer Care</h1>
+                </div>
+            </div>
+        </div>
+        <div class="footer d-flex p-2">
+            <div class="pt-2">
+                {% load app_filters %}
+                <p class="org-name">Copyright &copy;  {{ '' | current_year }} KIRABOFLIX. Made with love by <a href="https://wa.link/0no7d9" style="font-size: 13px; text-decoration: underline;">Kirabo Ibrahim</a>.</p>
+                <p> Film data from <a href="https://www.themoviedb.org/" style="font-size: 15px; text-decoration: underline;">TMDB</a>.</p>
+                <p class="mt-4">
+                    <a class="mr-4" href="{% url 'email-contact' %}"><span class="fas fa-envelope-open-text"></span></a>
+                    <a  href="https://wa.link/0no7d9"><span class="fab fa-whatsapp"></span></a>
+
+                </p>
+            </div>
+            <div class="pt-2 privacy-policy mb-3">
+                <a  href="{% url 'privacy-policy' %}">Privacy policy</a>
+            </div>
+        </div>
+{% endblock %}
+
+

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title  %}
+    Film data - KIRABOFLIX
+{% endblock %}
+
+{% block extra_head %}
+
+{% endblock %}
+{% block active_film_data %}
+    active
+{% endblock %}
+{% block content %}
+    <div class="container mt-5">
+        <h1 style="font-size: 22px; font-weight: bold;">Film data</h1>
+        <p>All film-related metadata used in KIRABOFLIX, including actor, director and, synopses, release dates, trailers and poster art is supplied by <a href="http://themoviedb.org/">The Movie Database</a> (TMDb).</p>
+
+        <div class="tmdb-logo">
+            <a href="http://themoviedb.org/">
+                {% load static %}
+                <img src="{% static 'images/tmdb_logo.svg' %}" width="275" height="200" alt="TMDB logo">
+            </a>
+        </div>
+
+        <p><i>KIRABOFLIX uses the TMDb API but is not endorsed or certified by TMDb.</i></p>
+    </div>
+{% endblock %}

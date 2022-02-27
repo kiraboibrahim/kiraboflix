@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}
+    ABOUT KIRABOFLIX
+{% endblock %}
+{% block active_about_us %}
+    active
+{% endblock %}
+{% block extra_head %}
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/privacy_policy.css' %}">
+    <style>
+        div.container {
+            text-align: justify;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>ABOUT KIRABOFLIX</h1>
+
+    <p>KIRABOFLIX is a movie streaming website whose mission is to provide a hassle free movie streaming service
+    to the public at no cost.
+    </p>
+
+    <p> KIRABOFLIX will undergo various updates  in order to improve our service, and I will always
+        strive to provide high quality services to my end users.
+    </p>
+
+    <h1>DISCLAIMER</h1>
+    <p> No copyrighted content is hosted on our servers, all media content is hosted on third party servers.</p>
+
+
+</div>
+{% endblock %}
