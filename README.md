@@ -1,5 +1,4 @@
-# kiraboflix
-<<<<<<< HEAD
+### KIRABOFLIX
 Free movie streaming application
 
 * No costs
@@ -9,6 +8,3 @@ Free movie streaming application
 * Continous updates and maintainance 
 
 Visit application: [KIRABOFLIX](https://kiraboflix.pythonanywhere.com)
-=======
-Watch, Download Movies, TV series for free
->>>>>>> cde7645 (Integrated VCS (git)  in kiraboflix)
